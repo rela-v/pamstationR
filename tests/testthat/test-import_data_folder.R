@@ -1,10 +1,8 @@
 test_that("import_data_folder function exists", {
-  source('../../R/import_data_folder.R')
   expect_true(exists("import_data_folder"))
 })
 
 test_that("import_data_folder handles missing arguments", {
-  source('../../R/import_data_folder.R')
   expect_error(import_data_folder(dirpath=''))
   expect_error(import_data_folder(dirpath='folder_that_doesnt_exist'))
   temp_dir <- withr::local_tempdir('folder_that_exists')
