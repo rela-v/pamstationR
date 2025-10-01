@@ -22,6 +22,8 @@ commit](https://bioconductor.org/shields/lastcommit/devel/bioc/pamstationR.svg)]
 [![Bioc
 dependencies](https://bioconductor.org/shields/dependencies/release/pamstationR.svg)](https://bioconductor.org/packages/release/bioc/html/pamstationR.html#since)
 [![check-bioc](https://github.com/rela-v/pamstationR/actions/workflows/check-bioc.yml/badge.svg)](https://github.com/rela-v/pamstationR/actions/workflows/check-bioc.yml)
+[![Codecov test
+coverage](https://codecov.io/gh/rela-v/pamstationR/graph/badge.svg)](https://app.codecov.io/gh/rela-v/pamstationR)
 <!-- badges: end -->
 
 The goal of `pamstationR` is to …
