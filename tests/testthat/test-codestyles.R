@@ -1,5 +1,3 @@
-exported_function_list <- c('import_data_folder')
-
 test_that("code is documented", {
   filepaths <- list.files("R", full.names=TRUE)
   filepaths <- setdiff(filepaths, 'R/custom_expectations.R')
