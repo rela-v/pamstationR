@@ -1,40 +1,30 @@
-#' Import Pamstation folder
+#' Enhance Spots
 #'
-#' This function imports a data folder, containing image data in tiff format
+#' This function ingests an image file in tiff format
 #' (typically in an `ImageResults` subfolder) from
-#' the Pamgene Pamstation kinome array device.
+#' the Pamgene Pamstation kinome array device
+#' and enhances the image so that spots are more easily discerned.
 #' @param dirpath A character vector indicating the dirpath for the
 #' Pamstation data folder containing the image data.
 #' @param image_folder_name A character vector indicating the
 #' name of the ImageData subfolder contained within the Pamstation
 #' data folder specified in **dirpath** - default is "ImageResults".
-#' @param array_annotation A character vector indicating the
-#' name of the array annotation file contained within the Pamstation
-#' data folder specified in **dirpath**.
-#' This should contain annotations for every spot on the array and
-#' their corresponding peptide/sequence/etc. annotations.
-#' @param sample_annotation A character vector indicating the
-#' name of the sample annotation file contained within the Pamstation
-#' data folder specified in **dirpath**.
-#' This should contain annotations for every sample on the array and
-#' (one per well) with any relevant information included.
-#' @return A named list, among which is one `image_data` object
-#' accessible via return_object$image_data, which is a
-#' SummarizedExperiment object representing the intensity
-#' statistics for each probe, well, and chip.
-#' @keywords data import image
+#' @param image_filename A character vector indicating the
+#' filename of the *.tiff array image file to be processed,
+#' contained within the Pamstation data folder specified in
+#' the **dirpath** argument, within the **image_folder_name**
+#' subdirectory.
+#' @return A named list, with one list item being named "enhanced_array",
+#' which contains an S4Vectors Dataframe of single-channel greyscale intensities
+#' enhanced for visibility
+#' @keywords data import image image-analysis preprocessing
 #' @export
 #' @examples
 #' temp_dir <- withr::local_tempdir('folder_that_exists')
 #' inner_name <- "ImageResults"
 #' dir.create(file.path(temp_dir, inner_name))
-#' array_annotation_file <- 'array_annotation.txt'
-#' file.create(file.path(temp_dir, array_annotation_file))
-#' sample_annotation_file <- 'sample_annotation.txt'
-#' file.create(file.path(temp_dir, sample_annotation_file))
-#' import_data_folder(dirpath = temp_dir,
-#' array_annotation = file.path(temp_dir, array_annotation_file),
-#' sample_annotation = file.path(temp_dir, sample_annotation_file))
+#' file.create(file.path(temp_dir, inner_name, 'existing_image.tiff'))
+#' enhance_spots(dirpath = temp_dir, image_filename='existing_image.tiff')
 
 import_data_folder <- function(dirpath, array_annotation, sample_annotation, image_folder_name = "ImageResults") {
   if(dirpath %in% c('', NULL, NA)) {
@@ -61,3 +51,4 @@ import_data_folder <- function(dirpath, array_annotation, sample_annotation, ima
   result <- 1
   return(list(image_data=result))
 }
+

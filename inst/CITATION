@@ -15,15 +15,5 @@ c(
         url = "http://www.bioconductor.org/packages/pamstationR",
         note = pkgVer('pamstationR'),
         doi = '10.18129/B9.bioc.pamstationR'
-    ),
-    bibentry(bibtype="article",
-        title = "",
-        author = personList(
-            as.person("rela-v")
-        ),
-        year = format(Sys.Date(), "%Y"),
-        journal = "bioRxiv",
-        doi = "10.1101/TODO",
-        url = "https://www.biorxiv.org/content/10.1101/TODO"
     )
 )

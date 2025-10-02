@@ -15,6 +15,18 @@ import_data_folder(
 \item{dirpath}{A character vector indicating the dirpath for the
 Pamstation data folder containing the image data.}
 
+\item{array_annotation}{A character vector indicating the
+name of the array annotation file contained within the Pamstation
+data folder specified in \strong{dirpath}.
+This should contain annotations for every spot on the array and
+their corresponding peptide/sequence/etc. annotations.}
+
+\item{sample_annotation}{A character vector indicating the
+name of the sample annotation file contained within the Pamstation
+data folder specified in \strong{dirpath}.
+This should contain annotations for every sample on the array and
+(one per well) with any relevant information included.}
+
 \item{image_folder_name}{A character vector indicating the
 name of the ImageData subfolder contained within the Pamstation
 data folder specified in \strong{dirpath} - default is "ImageResults".}
@@ -29,16 +41,16 @@ This function imports a data folder, containing image data in tiff format
 the Pamgene Pamstation kinome array device.
 }
 \examples{
-# Example 1: A data folder at `/Users/user/project/data/pamstation_output_folder/`
-import_data_folder(dirpath = "/Users/user/project/data/pamstation_output_folder/",
-image_folder_name = "ImageResults")
-
-# Example 2: A data folder within a data folder inside of the current working directory, at `./data/pamstation_output_folder/` where the image_folder_name is "ImageResults" (default)
-import_data_folder(dirpath = "data/pamstation_output_folder/")
-}
-\seealso{
-\code{\link[stats]{setNames}}, \code{\link{get_bmi_category}}
-(assuming another function exists)
+temp_dir <- withr::local_tempdir('folder_that_exists')
+inner_name <- "ImageResults"
+dir.create(file.path(temp_dir, inner_name))
+array_annotation_file <- 'array_annotation.txt'
+file.create(file.path(temp_dir, array_annotation_file))
+sample_annotation_file <- 'sample_annotation.txt'
+file.create(file.path(temp_dir, sample_annotation_file))
+import_data_folder(dirpath = temp_dir,
+array_annotation = file.path(temp_dir, array_annotation_file),
+sample_annotation = file.path(temp_dir, sample_annotation_file))
 }
 \keyword{data}
 \keyword{image}
