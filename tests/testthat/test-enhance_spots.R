@@ -5,18 +5,12 @@ test_that("enhance_spots function exists", {
 test_that("enhance_spots handles missing arguments", {
   expect_error(enhance_spots(dirpath='', image_filename=''))
   expect_error(enhance_spots(dirpath='folder_that_doesnt_exist'))
-  temp_dir <- withr::local_tempdir('folder_that_exists')
-  # 2. Create the Inner Directory using the outer path
-  # We use tempfile() to generate a unique name, and then dir.create() 
-  # to make the actual directory structure.
+  test_dir <- system.file('extdata', 'test_dir', package="pamstationR")
   inner_name <- "ImageResults"
-  dir.create(file.path(temp_dir, inner_name))
-  # Check if the structure exists
-  expect_true(dir.exists(temp_dir))
-  expect_true(dir.exists(file.path(temp_dir, inner_name)))
-  expect_error(enhance_spots(dirpath = temp_dir, image_filename='nonexistent_image.tiff'))
-  file.create(file.path(temp_dir, inner_name, 'existing_image.tiff'))
-  expect_no_error(enhance_spots(dirpath = temp_dir, image_filename='existing_image.tiff'))
+  expect_true(dir.exists(test_dir))
+  expect_true(dir.exists(file.path(test_dir, inner_name)))
+  expect_error(enhance_spots(dirpath = test_dir, image_filename='nonexistent_image.tiff'))
+  expect_no_error(enhance_spots(dirpath = test_dir, image_filename='test_image_PTK.tif'))
 })
 
 test_that("enhance_spots has all required arguments", {
@@ -41,12 +35,12 @@ test_that("enhance_spots does not use unprefixed calls to external functions", {
 })
 
 test_that("enhance_spots returns a named list", {
-  temp_dir <- withr::local_tempdir('folder_that_exists')
+  test_dir <- system.file('extdata', 'test_dir', package="pamstationR")
   inner_name <- "ImageResults"
-  dir.create(file.path(temp_dir, inner_name))
-  sample_annotation_file <- 'sample_annotation.txt'
-  file.create(file.path(temp_dir, inner_name, 'existing_image.tiff'))
-  result <- enhance_spots(dirpath = temp_dir, image_filename='existing_image.tiff')
+  expect_true(dir.exists(test_dir))
+  expect_true(dir.exists(file.path(test_dir, inner_name)))
+  expect_error(enhance_spots(dirpath = test_dir, image_filename='nonexistent_image.tiff'))
+  result <- enhance_spots(dirpath = test_dir, image_filename='test_image_PTK.tif')
   expect_true(is_named_list(result))
 })
 

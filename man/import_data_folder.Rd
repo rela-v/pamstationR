@@ -32,7 +32,9 @@ name of the ImageData subfolder contained within the Pamstation
 data folder specified in \strong{dirpath} - default is "ImageResults".}
 }
 \value{
-A SummarizedExperiment object representing the intensity
+A named list, among which is one \code{image_data} object
+accessible via return_object$image_data, which is a
+SummarizedExperiment object representing the intensity
 statistics for each probe, well, and chip.
 }
 \description{

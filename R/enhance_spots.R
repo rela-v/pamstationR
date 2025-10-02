@@ -14,41 +14,50 @@
 #' contained within the Pamstation data folder specified in
 #' the **dirpath** argument, within the **image_folder_name**
 #' subdirectory.
+#' @param method A character vector indicating the
+#' method to use for image enhancement: must be in
+#' c("wth", "dog"), for either the "White Top-Hat
+#' Transformation" or the "Difference of Gaussians"
+#' methods respectively.
 #' @return A named list, with one list item being named "enhanced_array",
 #' which contains an S4Vectors Dataframe of single-channel greyscale intensities
 #' enhanced for visibility
 #' @keywords data import image image-analysis preprocessing
 #' @export
 #' @examples
-#' temp_dir <- withr::local_tempdir('folder_that_exists')
-#' inner_name <- "ImageResults"
-#' dir.create(file.path(temp_dir, inner_name))
-#' file.create(file.path(temp_dir, inner_name, 'existing_image.tiff'))
-#' enhance_spots(dirpath = temp_dir, image_filename='existing_image.tiff')
+#' test_dir <- system.file('extdata', 'test_dir', package = "pamstationR")
+#' enhance_spots(dirpath = test_dir, image_filename='test_image_PTK.tif')
 
-import_data_folder <- function(dirpath, array_annotation, sample_annotation, image_folder_name = "ImageResults") {
+enhance_spots <- function(dirpath, 
+                          image_filename,
+                          image_folder_name = "ImageResults",
+                          method = "wth") {
   if(dirpath %in% c('', NULL, NA)) {
-    stop("Please input a non-empty dirpath to a pamstation-generated data folder containing a populated image data folder.")
+    stop("Please input a non-empty dirpath to a pamstation-generated 
+         data folder containing a populated image data folder.")
   }
   if(!file.exists(dirpath)) {
-    stop("Please input a dirpath to an existing pamstation-generated directory containing a populated image data folder.")
+    stop("Please input a dirpath to an existing pamstation-generated 
+         directory containing a populated image data folder.")
   }
-  if(array_annotation %in% c('', NULL, NA)) {
-    stop("Please input a non-empty filepath to a pamstation-generated array annotation file.")
+  if(image_filename %in% c('', NULL, NA)) {
+    stop("Please input a non-empty filepath to 
+         a pamstation-generated TIFF image file.")
   }
-  if(!file.exists(array_annotation)) {
-    stop("Please input a filepath to an existing array annotation file.")
-  }
-  if(sample_annotation %in% c('', NULL, NA)) {
-    stop("Please input a non-empty filepath to a pamstation-generated sample annotation file.")
-  }
-  if(!file.exists(sample_annotation)) {
-    stop("Please input a filepath to an existing sample annotation file.")
+  if(!file.exists(file.path(dirpath, image_folder_name, image_filename))) {
+    stop("Please input a filepath to an existing TIFF image file.")
   }
   if(!image_folder_name %in% basename(list.dirs(dirpath))) {
-    stop("Could not find image data folder (set by image_folder_name, default='ImageResults') in user set dirpath.")
+    stop("Could not find image data folder (set by image_folder_name, 
+         default='ImageResults') in user set dirpath.")
   }
-  result <- 1
-  return(list(image_data=result))
+  image_filepath <- file.path(dirpath, image_folder_name, image_filename)
+  image_data <- EBImage::readImage(image_filepath, type="tiff")
+  if (!method %in% c("wth", "dog")) {
+    stop("Please assign the `method` parameter to one of either 'wth' 
+         (White Top-Hat Transformation) or 'dog' (Difference of Gaussians).
+         Default is 'wth'.")
+  }
+  result <- image_data
+  return(list(enhanced_array = result))
 }
-
