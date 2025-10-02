@@ -32,32 +32,32 @@ enhance_spots <- function(dirpath,
                           image_filename,
                           image_folder_name = "ImageResults",
                           method = "wth") {
-  if(dirpath %in% c('', NULL, NA)) {
+  if (dirpath %in% c("", NULL, NA)) {
     stop("Please input a non-empty dirpath to a pamstation-generated 
          data folder containing a populated image data folder.")
   }
-  if(!file.exists(dirpath)) {
+  if (!file.exists(dirpath)) {
     stop("Please input a dirpath to an existing pamstation-generated 
          directory containing a populated image data folder.")
   }
-  if(image_filename %in% c('', NULL, NA)) {
+  if (image_filename %in% c("", NULL, NA)) {
     stop("Please input a non-empty filepath to 
          a pamstation-generated TIFF image file.")
   }
-  if(!file.exists(file.path(dirpath, image_folder_name, image_filename))) {
+  if (!file.exists(file.path(dirpath, image_folder_name, image_filename))) {
     stop("Please input a filepath to an existing TIFF image file.")
   }
-  if(!image_folder_name %in% basename(list.dirs(dirpath))) {
+  if (!image_folder_name %in% basename(list.dirs(dirpath))) {
     stop("Could not find image data folder (set by image_folder_name, 
          default='ImageResults') in user set dirpath.")
   }
-  image_data <- read_tiff(dirpath=dirpath, image_filename = image_filename)$raw_array
+  image_data <- read_tiff(dirpath = dirpath,
+                          image_filename = image_filename)$raw_array
   if (!method %in% c("wth", "dog")) {
     stop("Please assign the `method` parameter to one of either 'wth' 
          (White Top-Hat Transformation) or 'dog' (Difference of Gaussians).
          Default is 'wth'.")
   }
   enhanced_array <- image_data
-  
   return(list(enhanced_array = enhanced_array))
 }

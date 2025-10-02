@@ -25,27 +25,29 @@
 read_tiff <- function(dirpath,
                       image_filename,
                       image_folder_name = "ImageResults") {
-  if(dirpath %in% c('', NULL, NA)) {
+  if (dirpath %in% c("", NULL, NA)) {
     stop("Please input a non-empty dirpath to a pamstation-generated 
          data folder containing a populated image data folder.")
   }
-  if(!file.exists(dirpath)) {
+  if (!file.exists(dirpath)) {
     stop("Please input a dirpath to an existing pamstation-generated 
          directory containing a populated image data folder.")
   }
-  if(image_filename %in% c('', NULL, NA)) {
+  if (image_filename %in% c("", NULL, NA)) {
     stop("Please input a non-empty filepath to 
          a pamstation-generated TIFF image file.")
   }
-  if(!file.exists(file.path(dirpath, image_folder_name, image_filename))) {
+  if (!file.exists(file.path(dirpath, image_folder_name, image_filename))) {
     stop("Please input a filepath to an existing TIFF image file.")
   }
-  if(!image_folder_name %in% basename(list.dirs(dirpath))) {
+  if (!image_folder_name %in% basename(list.dirs(dirpath))) {
     stop("Could not find image data folder (set by image_folder_name, 
          default='ImageResults') in user set dirpath.")
   }
   image_filepath <- file.path(dirpath, image_folder_name, image_filename)
-  image_data <- suppressWarnings(EBImage::readImage(image_filepath, type="tiff"))
+  image_data <- suppressWarnings(EBImage::readImage(
+                                                    image_filepath,
+                                                    type="tiff"))
   img_matrix <- EBImage::imageData(image_data)
   img_dims <- dim(image_data)
   coords <- expand.grid(X = 1:img_dims[1], Y = 1:img_dims[2])
