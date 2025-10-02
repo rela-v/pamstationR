@@ -7,9 +7,9 @@ pkgVer <- function(pkg) {
 c(
 
     bibentry(bibtype="manual",
-        title = "",
+        title = "pamstationR",
         author = personList(
-            as.person("rela-v")
+            as.person("John Vergis")
         ),
         year = format(Sys.Date(), "%Y"),
         url = "http://www.bioconductor.org/packages/pamstationR",

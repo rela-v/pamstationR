@@ -1,19 +1,25 @@
 Package: pamstationR
 Title: What the Package Does (One Line, Title Case)
-Version: 0.99.0
+Version: 0.1.0
 Date: 2025-10-01
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
+    person("John", "Vergis", , "john.vergis@rockets.utoledo.edu", role = c("aut", "cre"), comment=c(ORCID="0009-0006-0864-3264"))
 Description: What the package does (one paragraph).
 License: Artistic-2.0
 URL: https://github.com/rela-v/pamstationR
-BugReports: https://github.com/rela-v/pamstationR//issues/
-biocViews: Software
+BugReports: https://github.com/rela-v/pamstationR/issues/
+biocViews: Software, AssayDomain, Proteomics, Preprocessing, QualityControl, DataImport
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Suggests: 
-    testthat (>= 3.0.0)
+    BiocStyle,
+    knitr,
+    RefManageR,
+    rmarkdown,
+    sessioninfo,
+    testthat
 Config/testthat/edition: 3
 Imports: 
     S4Vectors
+VignetteBuilder: knitr
