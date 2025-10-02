@@ -22,7 +22,6 @@
 #' # Example 2: A data folder within a data folder inside of the current working directory, at `./data/pamstation_output_folder/` where the image_folder_name is "ImageResults" (default)
 #' import_data_folder(dirpath = "data/pamstation_output_folder/")
 import_data_folder <- function(dirpath, array_annotation, sample_annotation, image_folder_name = "ImageResults") {
-  # Error handling (good practice but not strictly Roxygen2)
   if(dirpath %in% c('', NULL, NA)) {
     stop("Please input a non-empty dirpath to a pamstation-generated data folder containing a populated image data folder.")
   }
@@ -44,4 +43,6 @@ import_data_folder <- function(dirpath, array_annotation, sample_annotation, ima
   if(!image_folder_name %in% basename(list.dirs(dirpath))) {
     stop("Could not find image data folder (set by image_folder_name, default='ImageResults') in user set dirpath.")
   }
+  result <- 1
+  return(list(image_data=result))
 }
