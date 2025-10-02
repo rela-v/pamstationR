@@ -2,3 +2,4 @@
 
 export(enhance_spots)
 export(import_data_folder)
+export(read_tiff)

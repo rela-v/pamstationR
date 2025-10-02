@@ -1,9 +1,8 @@
-#' Enhance Spots
+#' Read TIFF file
 #'
 #' This function ingests an image file in tiff format
 #' (typically in an `ImageResults` subfolder) from
 #' the Pamgene Pamstation kinome array device
-#' and enhances the image so that spots are more easily discerned.
 #' @param dirpath A character vector indicating the dirpath for the
 #' Pamstation data folder containing the image data.
 #' @param image_folder_name A character vector indicating the
@@ -14,24 +13,18 @@
 #' contained within the Pamstation data folder specified in
 #' the **dirpath** argument, within the **image_folder_name**
 #' subdirectory.
-#' @param method A character vector indicating the
-#' method to use for image enhancement: must be in
-#' c("wth", "dog"), for either the "White Top-Hat
-#' Transformation" or the "Difference of Gaussians"
-#' methods respectively.
-#' @return A named list, with one list item being named "enhanced_array",
+#' @return A named list, with one list item being named "raw_array",
 #' which contains an S4Vectors Dataframe of single-channel greyscale intensities
 #' enhanced for visibility
-#' @keywords data import image image-analysis preprocessing
+#' @keywords raw-data data import image
 #' @export
 #' @examples
 #' test_dir <- system.file('extdata', 'test_dir', package = "pamstationR")
-#' enhance_spots(dirpath = test_dir, image_filename='test_image_PTK.tif')
+#' read_tiff(dirpath = test_dir, image_filename='test_image_PTK.tif')
 
-enhance_spots <- function(dirpath, 
-                          image_filename,
-                          image_folder_name = "ImageResults",
-                          method = "wth") {
+read_tiff <- function(dirpath,
+                      image_filename,
+                      image_folder_name = "ImageResults") {
   if(dirpath %in% c('', NULL, NA)) {
     stop("Please input a non-empty dirpath to a pamstation-generated 
          data folder containing a populated image data folder.")
@@ -51,13 +44,15 @@ enhance_spots <- function(dirpath,
     stop("Could not find image data folder (set by image_folder_name, 
          default='ImageResults') in user set dirpath.")
   }
-  image_data <- read_tiff(dirpath=dirpath, image_filename = image_filename)$raw_array
-  if (!method %in% c("wth", "dog")) {
-    stop("Please assign the `method` parameter to one of either 'wth' 
-         (White Top-Hat Transformation) or 'dog' (Difference of Gaussians).
-         Default is 'wth'.")
-  }
-  enhanced_array <- image_data
-  
-  return(list(enhanced_array = enhanced_array))
+  image_filepath <- file.path(dirpath, image_folder_name, image_filename)
+  image_data <- suppressWarnings(EBImage::readImage(image_filepath, type="tiff"))
+  img_matrix <- EBImage::imageData(image_data)
+  img_dims <- dim(image_data)
+  coords <- expand.grid(X = 1:img_dims[1], Y = 1:img_dims[2])
+  tidy_df <- data.frame(
+    coords,
+    Value = as.vector(img_matrix)
+  )
+  s4_df <- S4Vectors::DataFrame(tidy_df)
+  return(list(raw_array = s4_df))
 }

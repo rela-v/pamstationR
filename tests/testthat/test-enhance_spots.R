@@ -44,3 +44,13 @@ test_that("enhance_spots returns a named list", {
   expect_true(is_named_list(result))
 })
 
+test_that("enhance_spots returns a named list containing an Image object in 'enhanced_array' list item", {
+  test_dir <- system.file('extdata', 'test_dir', package="pamstationR")
+  inner_name <- "ImageResults"
+  expect_true(dir.exists(test_dir))
+  expect_true(dir.exists(file.path(test_dir, inner_name)))
+  expect_error(enhance_spots(dirpath = test_dir, image_filename='nonexistent_image.tiff'))
+  result <- enhance_spots(dirpath = test_dir, image_filename='test_image_PTK.tif')
+  expect_true(class(result$enhanced_array) == "DFrame")
+})
+

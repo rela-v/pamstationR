@@ -59,5 +59,5 @@ import_data_folder <- function(dirpath, array_annotation, sample_annotation, ima
     stop("Could not find image data folder (set by image_folder_name, default='ImageResults') in user set dirpath.")
   }
   result <- 1
-  return(list(image_data=result))
+  return(list(image_data = result))
 }
