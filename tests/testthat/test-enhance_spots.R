@@ -44,7 +44,7 @@ test_that("enhance_spots returns a named list", {
   expect_true(is_named_list(result))
 })
 
-test_that("enhance_spots returns a named list containing an Image object in 'enhanced_array' list item", {
+test_that("enhance_spots returns a named list containing an DFrame object in 'enhanced_array' list item", {
   test_dir <- system.file('extdata', 'test_dir', package="pamstationR")
   inner_name <- "ImageResults"
   expect_true(dir.exists(test_dir))
@@ -54,3 +54,13 @@ test_that("enhance_spots returns a named list containing an Image object in 'enh
   expect_true(class(result$enhanced_array) == "DFrame")
 })
 
+test_that("enhance_spots returns a different DFrame object from read_tiff", {
+  test_dir <- system.file('extdata', 'test_dir', package="pamstationR")
+  inner_name <- "ImageResults"
+  expect_true(dir.exists(test_dir))
+  expect_true(dir.exists(file.path(test_dir, inner_name)))
+  expect_error(enhance_spots(dirpath = test_dir, image_filename='nonexistent_image.tiff'))
+  raw_result <- read_tiff(dirpath = test_dir, image_filename='test_image_PTK.tif')$raw_array
+  enhanced_result <- enhance_spots(dirpath = test_dir, image_filename='test_image_PTK.tif')$enhanced_array
+  expect_true(any(raw_result != enhanced_result))
+})

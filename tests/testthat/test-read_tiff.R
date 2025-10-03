@@ -52,6 +52,7 @@ test_that("read_tiff returns a named list containing an Image object in 'enhance
   expect_error(read_tiff(dirpath = test_dir, image_filename='nonexistent_image.tiff'))
   result <- read_tiff(dirpath = test_dir, image_filename='test_image_PTK.tif')
   expect_true(class(result$raw_array)=="DFrame")
+  expect_true(class(result$ebimage_obj)=="Image")
 })
 
 

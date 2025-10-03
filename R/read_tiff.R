@@ -56,5 +56,5 @@ read_tiff <- function(dirpath,
     Value = as.vector(img_matrix)
   )
   s4_df <- S4Vectors::DataFrame(tidy_df)
-  return(list(raw_array = s4_df))
+  return(list(raw_array = s4_df, ebimage_obj=image_data))
 }

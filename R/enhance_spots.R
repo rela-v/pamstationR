@@ -18,7 +18,7 @@
 #' method to use for image enhancement: must be in
 #' c("wth", "dog"), for either the "White Top-Hat
 #' Transformation" or the "Difference of Gaussians"
-#' methods respectively.
+#' methods respectively. Default is "dog".
 #' @return A named list, with one list item being named "enhanced_array",
 #' which contains an S4Vectors Dataframe of single-channel greyscale intensities
 #' enhanced for visibility
@@ -31,7 +31,7 @@
 enhance_spots <- function(dirpath, 
                           image_filename,
                           image_folder_name = "ImageResults",
-                          method = "wth") {
+                          method = "dog") {
   if (dirpath %in% c("", NULL, NA)) {
     stop("Please input a non-empty dirpath to a pamstation-generated 
          data folder containing a populated image data folder.")
@@ -51,13 +51,45 @@ enhance_spots <- function(dirpath,
     stop("Could not find image data folder (set by image_folder_name, 
          default='ImageResults') in user set dirpath.")
   }
-  image_data <- read_tiff(dirpath = dirpath,
-                          image_filename = image_filename)$raw_array
+  img_obj <- read_tiff(dirpath = dirpath,
+                          image_filename = image_filename)
+  image_data <- img_obj$raw_array
+  ebimage_obj <- img_obj$ebimage_obj
   if (!method %in% c("wth", "dog")) {
     stop("Please assign the `method` parameter to one of either 'wth' 
          (White Top-Hat Transformation) or 'dog' (Difference of Gaussians).
          Default is 'wth'.")
   }
   enhanced_array <- image_data
-  return(list(enhanced_array = enhanced_array))
+
+  if (method == "wth") {
+    kern_size <- 7.0
+    kern <- EBImage::makeBrush(size = kern_size, shape = 'disc')
+    wth_img_obj <- EBImage::whiteTopHat(x = ebimage_obj, kern = kern)
+    enhanced_image_obj <- EBImage::normalize(
+                                          wth_img_obj,
+                                          separate = FALSE)
+
+  }
+  if (method == "dog") {
+    sig1 <- 1.0 # less blur
+    sig2 <- 1.6 # more blur
+    G_sigma1_I <- EBImage::gblur(ebimage_obj, sigma = sig1)
+    G_sigma2_I <- EBImage::gblur(ebimage_obj, sigma = sig2)
+    subtracted_img_obj <- G_sigma1_I - G_sigma2_I
+    enhanced_image_obj <- EBImage::normalize(
+                                             subtracted_img_obj,
+                                             separate = FALSE)
+
+  }
+  enhanced_array <- EBImage::imageData(enhanced_image_obj)
+  img_dims <- dim(enhanced_array)
+  coords <- expand.grid(X = 1:img_dims[1], Y = 1:img_dims[2])
+  tidy_df <- data.frame(
+    coords,
+    Value = as.vector(enhanced_array)
+  )
+  s4_df <- S4Vectors::DataFrame(tidy_df)
+  return(list(enhanced_img_obj = enhanced_image_obj,
+              enhanced_array = s4_df))
 }
