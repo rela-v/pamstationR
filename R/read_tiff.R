@@ -26,22 +26,22 @@ read_tiff <- function(dirpath,
                       image_filename,
                       image_folder_name = "ImageResults") {
   if (dirpath %in% c("", NULL, NA)) {
-    stop("Please input a non-empty dirpath to a pamstation-generated 
+    stop("Please input a non-empty dirpath to a pamstation-generated\
          data folder containing a populated image data folder.")
   }
   if (!file.exists(dirpath)) {
-    stop("Please input a dirpath to an existing pamstation-generated 
+    stop("Please input a dirpath to an existing pamstation-generated\
          directory containing a populated image data folder.")
   }
   if (image_filename %in% c("", NULL, NA)) {
-    stop("Please input a non-empty filepath to 
+    stop("Please input a non-empty filepath to\
          a pamstation-generated TIFF image file.")
   }
   if (!file.exists(file.path(dirpath, image_folder_name, image_filename))) {
     stop("Please input a filepath to an existing TIFF image file.")
   }
   if (!image_folder_name %in% basename(list.dirs(dirpath))) {
-    stop("Could not find image data folder (set by image_folder_name, 
+    stop("Could not find image data folder (set by image_folder_name,\
          default='ImageResults') in user set dirpath.")
   }
   image_filepath <- file.path(dirpath, image_folder_name, image_filename)

@@ -23,5 +23,7 @@ Suggests:
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Imports: 
+    dplyr,
     EBImage,
+    imager,
     S4Vectors

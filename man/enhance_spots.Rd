@@ -29,7 +29,7 @@ data folder specified in \strong{dirpath} - default is "ImageResults".}
 method to use for image enhancement: must be in
 c("wth", "dog"), for either the "White Top-Hat
 Transformation" or the "Difference of Gaussians"
-methods respectively.}
+methods respectively. Default is "dog".}
 }
 \value{
 A named list, with one list item being named "enhanced_array",

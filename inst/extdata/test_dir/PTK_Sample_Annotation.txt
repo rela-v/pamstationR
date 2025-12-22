@@ -1,0 +1,13 @@
+PamChip Location	Barcode	Row	Col	Array	Visual QC	PI PamGene	Operator	Project	Article number	Strip	ATP	Detection	Sample name	Sample type	Sample batch	Sample concentration	Lysis buffer in assay	Protein amount	Protein concentration sample	Assay volume	Compound(on Chip)	Compound concentration	Technical replicate	WL protocol	Tissue type	Tissue status
+1	641041101	1	1	A1	OK	NA	NA	NA	86412	1	Na	Na	CNTRL_F	Na	Na	0	0	0	0	40	Na	0	0	Na	Na	Na	
+1	641041101	2	1	A2	OK	NA	NA	NA	86412	1	Na	Na	ER_F	Na	Na	0	0	0	0	40	Na	0	0	Na	Na	Na	
+1	641041101	3	1	A3	OK	NA	NA	NA	86412	1	Na	Na	EE_F	Na	Na	0	0	0	0	40	Na	0	0	Na	Na	Na	
+1	641041101	4	1	A4	OK	NA	NA	NA	86412	1	Na	Na	PAMGENE_CNTRL	Na	Na	0	0	0	0	40	Na	0	0	Na	Na	Na	
+2	641041103	1	1	A1	OK	NA	NA	NA	86412	2	Na	Na	CNTRL_F	Na	Na	0	0	0	0	40	Na	0	0	Na	Na	Na	
+2	641041103	2	1	A2	OK	NA	NA	NA	86412	2	Na	Na	ER_F	Na	Na	0	0	0	0	40	Na	0	0	Na	Na	Na	
+2	641041103	3	1	A3	OK	NA	NA	NA	86412	2	Na	Na	EE_F	Na	Na	0	0	0	0	40	Na	0	0	Na	Na	Na	
+2	641041103	4	1	A4	OK	NA	NA	NA	86412	2	Na	Na	PAMGENE_CNTRL	Na	Na	0	0	0	0	40	Na	0	0	Na	Na	Na	
+3	641041104	1	1	A1	OK	NA	NA	NA	86412	3	Na	Na	CNTRL_F	Na	Na	0	0	0	0	40	Na	0	0	Na	Na	Na	
+3	641041104	2	1	A2	OK	NA	NA	NA	86412	3	Na	Na	ER_F	Na	Na	0	0	0	0	40	Na	0	0	Na	Na	Na	
+3	641041104	3	1	A3	OK	NA	NA	NA	86412	3	Na	Na	EE_F	Na	Na	0	0	0	0	40	Na	0	0	Na	Na	Na	
+3	641041104	4	1	A4	OK	NA	NA	NA	86412	3	Na	Na	PAMGENE_CNTRL	Na	Na	0	0	0	0	40	Na	0	0	Na	Na	Na	

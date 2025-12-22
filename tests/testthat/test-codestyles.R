@@ -1,6 +1,5 @@
 test_that("code is documented", {
   filepaths <- list.files("R", full.names=TRUE)
-  filepaths <- setdiff(filepaths, 'R/custom_expectations.R')
   expect_true(all(sapply(filepaths, function(filepath) {
                            has_roxygen_doc(filepath)
   })))

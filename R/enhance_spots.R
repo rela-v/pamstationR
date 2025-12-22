@@ -28,27 +28,27 @@
 #' test_dir <- system.file('extdata', 'test_dir', package = "pamstationR")
 #' enhance_spots(dirpath = test_dir, image_filename='test_image_PTK.tif')
 
-enhance_spots <- function(dirpath, 
+enhance_spots <- function(dirpath,
                           image_filename,
                           image_folder_name = "ImageResults",
-                          method = "dog") {
+                          method = "wth") {
   if (dirpath %in% c("", NULL, NA)) {
-    stop("Please input a non-empty dirpath to a pamstation-generated 
+    stop("Please input a non-empty dirpath to a pamstation-generated\
          data folder containing a populated image data folder.")
   }
   if (!file.exists(dirpath)) {
-    stop("Please input a dirpath to an existing pamstation-generated 
+    stop("Please input a dirpath to an existing pamstation-generated\
          directory containing a populated image data folder.")
   }
   if (image_filename %in% c("", NULL, NA)) {
-    stop("Please input a non-empty filepath to 
+    stop("Please input a non-empty filepath to\
          a pamstation-generated TIFF image file.")
   }
   if (!file.exists(file.path(dirpath, image_folder_name, image_filename))) {
     stop("Please input a filepath to an existing TIFF image file.")
   }
   if (!image_folder_name %in% basename(list.dirs(dirpath))) {
-    stop("Could not find image data folder (set by image_folder_name, 
+    stop("Could not find image data folder (set by image_folder_name,\
          default='ImageResults') in user set dirpath.")
   }
   img_obj <- read_tiff(dirpath = dirpath,
@@ -56,14 +56,14 @@ enhance_spots <- function(dirpath,
   image_data <- img_obj$raw_array
   ebimage_obj <- img_obj$ebimage_obj
   if (!method %in% c("wth", "dog")) {
-    stop("Please assign the `method` parameter to one of either 'wth' 
-         (White Top-Hat Transformation) or 'dog' (Difference of Gaussians).
+    stop("Please assign the `method` parameter to one of either 'wth'\
+         (White Top-Hat Transformation) or 'dog' (Difference of Gaussians).\
          Default is 'wth'.")
   }
   enhanced_array <- image_data
 
   if (method == "wth") {
-    kern_size <- 7.0
+    kern_size <- 15.0
     kern <- EBImage::makeBrush(size = kern_size, shape = 'disc')
     wth_img_obj <- EBImage::whiteTopHat(x = ebimage_obj, kern = kern)
     enhanced_image_obj <- EBImage::normalize(
@@ -72,7 +72,7 @@ enhance_spots <- function(dirpath,
 
   }
   if (method == "dog") {
-    sig1 <- 1.0 # less blur
+    sig1 <- 0.2 # less blur
     sig2 <- 1.6 # more blur
     G_sigma1_I <- EBImage::gblur(ebimage_obj, sigma = sig1)
     G_sigma2_I <- EBImage::gblur(ebimage_obj, sigma = sig2)
